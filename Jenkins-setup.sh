@@ -1,20 +1,25 @@
 #!/bin/bash
 echo "------------------Instaling Java------------------"
-sudo yum install java-11* -y
+yum install java-11* -y
 echo "------------------creating repo------------------"
-sudo touch /etc/yum.repos.d/jenkins.repos
+touch /etc/yum.repos.d/jenkins.repo
 echo "[jenkins]
 name=Jenkins-stable
 baseurl=http://pkg.jenkins.io/redhat-stable
 gpgcheck=1" > /etc/yum.repos.d/jenkins.repo
 echo "------------------Importing Key------------------"
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 echo "------------------instaling epel------------------"
-sudo yum install  epel-release -y
+yum install  epel-release -y
 echo " ------------------Installing Jenkins----------------------"
-sudo yum install jenkins -y
+yum install jenkins -y
 echo "------------------Checking Jenkins Status------------------"
-sudo systemctl status jenkins
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
-sudo systemctl status jenkins
+systemctl status jenkins
+echo "------------------Enabling Jenkins------------------"
+systemctl enable jenkins
+echo "------------------Starting Jenkins------------------"
+systemctl start jenkins
+echo "------------------Checking Jenkins Status------------------"
+systemctl status jenkins
+echo "---------------- Initial Admin Pasowrd is ----------------- "
+cat /var/lib/jenkins/secrets/initialAdminPassword
