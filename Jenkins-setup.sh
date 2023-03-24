@@ -3,9 +3,9 @@ echo "------------------Instaling Java------------------"
 yum install java-11* -y
 echo "------------------creating repo------------------"
 touch /etc/yum.repos.d/jenkins.repo
-echo "[jenkins]
-name=Jenkins-stable
-baseurl=http://pkg.jenkins.io/redhat-stable
+echo "[jenkins] \
+name=Jenkins-stable \
+baseurl=http://pkg.jenkins.io/redhat-stable \
 gpgcheck=1" > /etc/yum.repos.d/jenkins.repo
 echo "------------------Importing Key------------------"
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
