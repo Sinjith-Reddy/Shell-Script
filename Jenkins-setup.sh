@@ -1,12 +1,9 @@
 #!/bin/bash
 echo "------------------Instaling Java------------------"
-yum install java-11* -y
+//java-11 or above s required
+yum install java-11-openjdk -y
 echo "------------------creating repo------------------"
-touch /etc/yum.repos.d/jenkins.repo
-echo "[jenkins] \
-name=Jenkins-stable \
-baseurl=http://pkg.jenkins.io/redhat-stable \
-gpgcheck=1" > /etc/yum.repos.d/jenkins.repo
+curl -L -o jenkins.repo  https://pkg.jenkins.io/redhat-stable/jenkins.repo
 echo "------------------Importing Key------------------"
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 echo "------------------instaling epel------------------"
