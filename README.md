@@ -1,2 +1,2 @@
 # AWS
-Scripts file for setting up Linux Machines
+user data script to setup Jenkins for centos based servers
