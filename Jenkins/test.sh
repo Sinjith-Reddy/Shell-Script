@@ -1,18 +1,21 @@
+#!/bin/bash
+
 start_jenkins(){
   echo "ENABLING JENKINS"
   systemctl enable jenkins
+  if 
   echo "STARTING JENKINS"
   systemctl start jenkins
 }
 
 create_repo() {
-  if [ install_code=1 ];
+  if [[ $install_code -eq 1 ]];
   then
     echo "IMPORTING PUBLIC KEY"
     rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
     echo "CREATING REPO"
     curl -L -o /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-  elif [ install_code=2 ];
+  elif [[ $install_code -eq 2 ]];
   then
     #downloding the key
     curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
@@ -26,48 +29,52 @@ create_repo() {
 }
 
 install(){
-    if [ install_code=1 ];
+    if [[ $install_code -eq 1 ]];
     then
         echo "CHECKING WHETHER JENKINS REPO IS AVAILABLE"
         if [ -f /etc/yum.repos.d/jenkins.repo ]; 
         then
-        echo "JENKINS REPO IS AVAILABLE"
-        echo "INSTALLING"
-        yum install  epel-release -y
-        yum install jenkins -y
+            echo "JENKINS REPO IS AVAILABLE"
+            echo "INSTALLING"
+            yum install  epel-release -y > /dev/null
+            yum install jenkins -y  > /dev/null
+            start_jenkins
+        else
+            create_repo
+            echo "INSTALLING JENKINS"
+            yum install  epel-release -y > /dev/null
+            yum install jenkins -y > /dev/null
+            start_jenkins
+        fi
+        
+    elif [[ $install_code -eq 2 ]];
+    then
+        if [[ -f /usr/share/keyrings/jenkins-keyring.asc && -f /etc/apt/sources.list.d/jenkins.list ]];
+        then
+        echo "INSTALLING JENKINS"
+        apt-get update > /dev/null
+        apt install jenkins -y > /dev/null
         start_jenkins
         else
         create_repo
         echo "INSTALLING JENKINS"
-        yum install  epel-release -y
-        yum install jenkins -y
-        start_jenkins
-        fi
-        
-    elif [ install_code=2 ];
-    then
-        if [-f /usr/share/keyrings/jenkins-keyring.asc && -f /etc/apt/sources.list.d/jenkins.list ];
-        then
-        apt-get update
-        apt install jenkins -y
-        start_jenkins
-        else
-        create_repo
-        apt-get update
-        apt install jenkins -y
+        apt-get update > /dev/null
+        apt install jenkins -y > /dev/null
         start_jenkins
         fi 
     fi
 
 }
 java_installation(){
-    if [ install_code=1 ];
+    if [[ $install_code -eq 1 ]];
     then
+        echo "INSTALLING JAVA"
         yum install java-11* -y
-    elif [ install_code=2 ];
+    elif [[ $install_code -eq 2 ]];
     then
-        apt-get update
-        apt install openjdk-11-jdk -y
+        echo "INSTALLING JAVA"
+        apt-get update > /dev/null
+        apt install openjdk-11-jdk -y > /dev/null
     fi
 }
 
