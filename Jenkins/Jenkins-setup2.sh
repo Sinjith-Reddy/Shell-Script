@@ -119,6 +119,6 @@ case $os_family in
     #debian_based_installation
     ;;
   *)
-    echo "Unkown OS family"
+    echo "Unkown linux distribution"
     ;;
 esac
