@@ -3,7 +3,7 @@
 start_jenkins(){
   echo "ENABLING JENKINS"
   systemctl enable jenkins
-  ps -ef|grep jenkins|grep -v grep >/dev/null 2>&1
+  ps -ef|grep jenkins|grep -v grep > /dev/null 2>&1
   if [[ $? -ne 0 ]];
   then
     echo "STARTING JENKINS"
@@ -41,14 +41,12 @@ install(){
         then
             echo "JENKINS REPO IS AVAILABLE"
             echo "INSTALLING"
-            yum install  epel-release -y > /dev/null
-            yum install jenkins -y  > /dev/null
+            yum install -y epel-release jenkins > /dev/null
             start_jenkins
         else
             create_repo
             echo "INSTALLING JENKINS"
-            yum install  epel-release -y > /dev/null
-            yum install jenkins -y > /dev/null
+            yum install -y epel-release jenkins > /dev/null
             start_jenkins
         fi
         
@@ -57,14 +55,12 @@ install(){
         if [[ -f /usr/share/keyrings/jenkins-keyring.asc && -f /etc/apt/sources.list.d/jenkins.list ]];
         then
         echo "INSTALLING JENKINS"
-        apt-get update > /dev/null
-        apt install jenkins -y > /dev/null
+        apt-get update && apt install jenkins -y > /dev/null
         start_jenkins
         else
         create_repo
         echo "INSTALLING JENKINS"
-        apt-get update > /dev/null
-        apt install jenkins -y > /dev/null
+        apt-get update && apt install jenkins -y > /dev/null
         start_jenkins
         fi 
     fi
@@ -78,14 +74,13 @@ java_installation(){
     elif [[ $install_code -eq 2 ]];
     then
         echo "INSTALLING JAVA"
-        apt-get update > /dev/null
-        apt install openjdk-11-jdk -y > /dev/null
+        apt-get update && apt install openjdk-11-jdk -y > /dev/null
     fi
 }
 
 jenkinsInstallation(){
   #Checking Java installed or not
-  which java >/dev/null 2>&1
+  which java > /dev/null 2>&1
   if [[ $? -eq 0 ]]; 
   then
     echo "JAVA IS INSTALLED"
