@@ -3,9 +3,14 @@
 start_jenkins(){
   echo "ENABLING JENKINS"
   systemctl enable jenkins
-  if 
-  echo "STARTING JENKINS"
-  systemctl start jenkins
+  ps -ef|grep jenkins|grep -v grep >/dev/null 2>&1
+  if [[ $? -ne 0 ]];
+  then
+    echo "STARTING JENKINS"
+    systemctl start jenkins
+    echo "JENKINS STARTED"
+  else
+    echo "JENKINS RUNNING"
 }
 
 create_repo() {
