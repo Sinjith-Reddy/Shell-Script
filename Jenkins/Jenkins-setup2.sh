@@ -11,6 +11,7 @@ start_jenkins(){
     echo "JENKINS STARTED"
   else
     echo "JENKINS RUNNING"
+  fi
 }
 
 create_repo() {
