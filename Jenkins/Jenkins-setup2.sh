@@ -9,8 +9,16 @@ start_jenkins(){
     echo "STARTING JENKINS"
     systemctl start jenkins
     echo "JENKINS STARTED"
+    echo "First Time login pasword: "
+    echo 
+    echo ${cat /var/lib/jenkins/secrets/initialAdminPassword}
+    echo
   else
     echo "JENKINS RUNNING"
+    echo "First Time login pasword: "
+    echo 
+    echo ${cat /var/lib/jenkins/secrets/initialAdminPassword}
+    echo
   fi
 }
 
