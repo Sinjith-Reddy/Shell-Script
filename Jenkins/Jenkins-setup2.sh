@@ -17,7 +17,7 @@ start_jenkins(){
     echo "JENKINS RUNNING"
     echo "First Time login pasword: "
     echo 
-    echo ${cat /var/lib/jenkins/secrets/initialAdminPassword}
+    echo $(cat /var/lib/jenkins/secrets/initialAdminPassword)
     echo
   fi
 }
