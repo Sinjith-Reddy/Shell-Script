@@ -3,7 +3,7 @@
 start_jenkins(){
   echo "ENABLING JENKINS"
   systemctl enable jenkins
-  export isRunning='ps -ef|grep jenkins|grep -v grep | wc -l'
+  export isRunning=$(ps -ef|grep jenkins|grep -v grep | wc -l)
   if [[ $isRunning -eq 0 ]];
   then
     echo "STARTING JENKINS"
